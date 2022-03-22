@@ -1,0 +1,143 @@
+// swift-interface-format-version: 1.0
+// swift-compiler-version: Apple Swift version 5.5 (swiftlang-1300.0.31.1 clang-1300.0.29.1)
+// swift-module-flags: -target arm64-apple-ios11.0-simulator -enable-objc-interop -enable-library-evolution -swift-version 5 -enforce-exclusivity=checked -O -module-name Cappasity
+import CommonCrypto
+import Foundation
+import ImageIO
+import SafariServices
+import Swift
+import UIKit
+import WebKit
+import _Concurrency
+public struct CappasityServiceError : Swift.Error {
+  public typealias Action = () -> Swift.Void
+  public enum Level {
+    case warning
+    case error
+    public static func == (a: Cappasity.CappasityServiceError.Level, b: Cappasity.CappasityServiceError.Level) -> Swift.Bool
+    public func hash(into hasher: inout Swift.Hasher)
+    public var hashValue: Swift.Int {
+      get
+    }
+  }
+  public let code: Swift.Int
+  public let localizedDescription: Swift.String
+  public let debugDescription: Swift.String
+  public let level: Cappasity.CappasityServiceError.Level
+  public let retryAction: Cappasity.CappasityServiceError.Action?
+  public let continueAction: Cappasity.CappasityServiceError.Action?
+}
+@_hasMissingDesignatedInitializers final public class CappasityService {
+  public static func set(userAlias: Swift.String, completionHandler: ((Swift.Bool, Cappasity.CappasityServiceError?) -> Swift.Void)? = nil)
+  @objc deinit
+}
+public enum CappasityModelRotationMode {
+  case loop
+  case once
+  case boomerang
+  public static func == (a: Cappasity.CappasityModelRotationMode, b: Cappasity.CappasityModelRotationMode) -> Swift.Bool
+  public func hash(into hasher: inout Swift.Hasher)
+  public var hashValue: Swift.Int {
+    get
+  }
+}
+@objc public enum FileAccessType : Swift.Int {
+  case publicAccess = 0
+  case privateAccess = 1
+  case unlistedAccess = 2
+  public init?(rawValue: Swift.Int)
+  public typealias RawValue = Swift.Int
+  public var rawValue: Swift.Int {
+    get
+  }
+}
+public protocol CappasityModelsListDelegate : Cappasity.CappasityDelegate {
+  func capService(didReceive models: [Cappasity.CappasityModel])
+}
+final public class CappasityModelsList {
+  public init(delegate: Cappasity.CappasityModelsListDelegate)
+  final public func nextModels(count: Swift.Int, offset: Swift.Int? = nil)
+  @objc deinit
+}
+public protocol CappasityDelegate : AnyObject {
+  func capService(didReceive error: Cappasity.CappasityServiceError)
+}
+@objc public enum CappasityZoomQuality : Swift.Int {
+  case sdZoom = 1
+  case hdZoom = 2
+  public init?(rawValue: Swift.Int)
+  public typealias RawValue = Swift.Int
+  public var rawValue: Swift.Int {
+    get
+  }
+}
+public protocol CappasityModelViewDelegate : Cappasity.CappasityDelegate {
+  func capServiceDidLoadContent()
+}
+@objc @_inheritsConvenienceInitializers @_Concurrency.MainActor(unsafe) final public class CappasityModelView : UIKit.UIView {
+  @_Concurrency.MainActor(unsafe) weak final public var delegate: Cappasity.CappasityModelViewDelegate? {
+    get
+    set(newValue)
+  }
+  @_Concurrency.MainActor(unsafe) weak final public var viewController: UIKit.UIViewController? {
+    get
+    set(newValue)
+  }
+  @_Concurrency.MainActor(unsafe) @objc override dynamic public init(frame: CoreGraphics.CGRect)
+  @_Concurrency.MainActor(unsafe) @objc required dynamic public init?(coder aDecoder: Foundation.NSCoder)
+  @_Concurrency.MainActor(unsafe) final public func stopLoading()
+  @_Concurrency.MainActor(unsafe) final public func reload()
+  @_Concurrency.MainActor(unsafe) final public func set(_ model: Cappasity.CappasityModel, controlsOffset: UIKit.UIOffset = UIOffset(horizontal: 0, vertical: 15), isAutoRotate: Swift.Bool? = nil, isAutorun: Swift.Bool? = nil, isLogoShown: Swift.Bool? = nil, autoRotateTime: Swift.Float? = nil, autoRotateDelay: Swift.Float? = nil, autoRotateDirection: Cappasity.CappasityAutoRotateDirection? = nil, isAutoRotateOptionsHidden: Swift.Bool? = nil, isSettingsButtonHidden: Swift.Bool? = nil, isImageZoomEnabled: Swift.Bool? = nil, zoomQuality: Cappasity.CappasityZoomQuality? = nil, isZoomOptionHidden: Swift.Bool? = nil, isHintHidden: Swift.Bool? = nil)
+  @objc deinit
+}
+public protocol CappasityModelDelegate : Cappasity.CappasityDelegate {
+  func capServiceDidReceiveModelInfo()
+  func capService(didReceive preview: UIKit.UIImage, userInfo: Swift.AnyObject?)
+}
+@_hasMissingDesignatedInitializers final public class CappasityModel {
+  final public var id: Swift.String? {
+    get
+  }
+  weak final public var delegate: Cappasity.CappasityModelDelegate? {
+    get
+    set(newValue)
+  }
+  final public var title: Swift.String? {
+    get
+  }
+  final public var sku: Swift.String? {
+    get
+  }
+  final public var access: Cappasity.FileAccessType? {
+    get
+  }
+  public init(withId id: Swift.String, delegate: Cappasity.CappasityModelDelegate?)
+  public init(withSku sku: Swift.String, delegate: Cappasity.CappasityModelDelegate?)
+  public init?(withLink link: Swift.String, delegate: Cappasity.CappasityModelDelegate?)
+  final public func receiveInfo()
+  final public func getPreview(widthPx: Swift.UInt, heightPx: Swift.UInt, userInfo: Swift.AnyObject? = nil)
+  final public func getPreview(widthPt: Swift.UInt, heightPt: Swift.UInt, userInfo: Swift.AnyObject? = nil)
+  @objc deinit
+}
+@objc public enum CappasityAutoRotateDirection : Swift.Int {
+  case counterClockwise = -1
+  case clockwise = 1
+  public init?(rawValue: Swift.Int)
+  public typealias RawValue = Swift.Int
+  public var rawValue: Swift.Int {
+    get
+  }
+}
+extension Cappasity.CappasityServiceError.Level : Swift.Equatable {}
+extension Cappasity.CappasityServiceError.Level : Swift.Hashable {}
+extension Cappasity.CappasityModelRotationMode : Swift.Equatable {}
+extension Cappasity.CappasityModelRotationMode : Swift.Hashable {}
+extension Cappasity.FileAccessType : Swift.Equatable {}
+extension Cappasity.FileAccessType : Swift.Hashable {}
+extension Cappasity.FileAccessType : Swift.RawRepresentable {}
+extension Cappasity.CappasityZoomQuality : Swift.Equatable {}
+extension Cappasity.CappasityZoomQuality : Swift.Hashable {}
+extension Cappasity.CappasityZoomQuality : Swift.RawRepresentable {}
+extension Cappasity.CappasityAutoRotateDirection : Swift.Equatable {}
+extension Cappasity.CappasityAutoRotateDirection : Swift.Hashable {}
+extension Cappasity.CappasityAutoRotateDirection : Swift.RawRepresentable {}
